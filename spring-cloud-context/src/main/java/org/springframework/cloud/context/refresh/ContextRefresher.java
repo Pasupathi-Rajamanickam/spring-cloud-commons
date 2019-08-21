@@ -92,7 +92,7 @@ public class ContextRefresher {
 				this.context.getEnvironment().getPropertySources());
 		addConfigFilesToEnvironment();
 		Set<String> keys = changes(before,
-				extract(this.context.getEnvironment().getPropertySources())).keySet();
+				extract(this.context.getEnvironment().getPropertySources()));
 		this.context.publishEvent(new EnvironmentChangeEvent(this.context, keys));
 		return keys;
 	}
@@ -187,24 +187,24 @@ public class ContextRefresher {
 		return environment;
 	}
 
-	private Map<String, Object> changes(Map<String, Object> before,
-			Map<String, Object> after) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		for (String key : before.keySet()) {
-			if (!after.containsKey(key)) {
-				result.put(key, null);
-			}
-			else if (!equal(before.get(key), after.get(key))) {
-				result.put(key, after.get(key));
-			}
-		}
-		for (String key : after.keySet()) {
-			if (!before.containsKey(key)) {
-				result.put(key, after.get(key));
-			}
-		}
-		return result;
-	}
+	private Set<String> changes(Map<String, Object> before,
+            Map<String, Object> after) {
+        Set<String> result = new HashSet<>();
+        for (String key : before.keySet()) {
+            if (!after.containsKey(key)) {
+                result.add(key);
+            }
+            else if (!equal(before.get(key), after.get(key))) {
+                result.add(key);
+            }
+        }
+        for (String key : after.keySet()) {
+            if (!before.containsKey(key)) {
+                result.add(key);
+            }
+        }
+        return result;
+    }
 
 	private boolean equal(Object one, Object two) {
 		if (one == null && two == null) {
