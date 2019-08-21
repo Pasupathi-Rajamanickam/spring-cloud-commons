@@ -188,22 +188,22 @@ public class ContextRefresher {
 	}
 
 	private Set<String> changes(Map<String, Object> before,
-            Map<String, Object> after) {
-        Set<String> result = new HashSet<>();
-        for (String key : before.keySet()) {
-            if (!after.containsKey(key)) {
-                result.add(key);
-            }
-            else if (!equal(before.get(key), after.get(key))) {
-                result.add(key);
-            }
-        }
-        for (String key : after.keySet()) {
-            if (!before.containsKey(key)) {
-                result.add(key);
-            }
-        }
-        return result;
+			Map<String, Object> after) {
+		Set<String> result = new HashSet<>();
+		for (String key : before.keySet()) {
+			if (!after.containsKey(key)) {
+				result.add(key);
+			}
+			else if (!equal(before.get(key), after.get(key))) {
+				result.add(key);
+			}
+		}
+		for (String key : after.keySet()) {
+			if (!before.containsKey(key)) {
+				result.add(key);
+			}
+		}
+		return result;
     }
 
 	private boolean equal(Object one, Object two) {
